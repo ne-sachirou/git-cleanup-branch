@@ -1,0 +1,7 @@
+name: git-cleanup-branch
+version: 0.1.0
+
+authors:
+  - ne_Sachirou <utakata.c4se@gmail.com>
+
+license: GPL-3.0

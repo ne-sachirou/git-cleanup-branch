@@ -1,0 +1,17 @@
+./git-cleanup-branch
+/.shards/
+
+
+# Created by https://www.gitignore.io/api/crystal
+
+### Crystal ###
+/.deps/
+/libs/
+/.crystal/
+/doc/
+
+
+# Libraries don't need dependency lock
+# Dependencies will be locked in application that uses them
+# Uncomment the line below if you are creating a library.
+#/.deps.lock

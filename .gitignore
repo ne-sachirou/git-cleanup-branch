@@ -1,5 +1,6 @@
-./git-cleanup-branch
+git-cleanup-branch
 /.shards/
+/tmp
 
 
 # Created by https://www.gitignore.io/api/crystal

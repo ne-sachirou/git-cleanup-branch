@@ -6,6 +6,6 @@ test:
 	find src spec -name '*.cr' | xargs crystal tool format
 	crystal spec -v
 	bundle exec rubocop
-	bundle exec cucumber
+	bundle exec cucumber features --format pretty
 
 # vim: set noet:

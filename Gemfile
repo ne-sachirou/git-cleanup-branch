@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 source 'https://rubygems.org'
 
-gem 'cucumber'
-gem 'rubocop'
+group :development do
+  gem 'aruba'
+  gem 'cucumber'
+  gem 'rubocop'
+end

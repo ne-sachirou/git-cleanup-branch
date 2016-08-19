@@ -3,13 +3,13 @@ module GitCleanupBranch
     include Enumerable(String)
 
     def initialize
-      @ch = Channel(Int32).new
+      @ch = Channel(UInt8).new
       spawn do
-        loop do
-          begin
-            @ch.send `read -rsn1 key 2> /dev/null && echo $key`[0].ord
-          rescue Channel::ClosedError
-            break
+        curses do
+          loop do
+            break if @ch.closed?
+            byte = STDIN.read_byte
+            @ch.send byte if byte rescue break
           end
         end
       end
@@ -18,9 +18,12 @@ module GitCleanupBranch
     def each
       loop do
         case ord = @ch.receive
+        when 3
+          close
+          exit
         when 4, 113
           yield "Cancel"
-        when 10
+        when 10, 13, 32
           yield "Enter"
         when 27
           next unless @ch.receive == 91
@@ -44,6 +47,17 @@ module GitCleanupBranch
 
     def close
       @ch.close
+    end
+
+    private def curses
+      if STDIN.tty?
+        STDIN.noecho do
+          STDIN.raw!
+          yield
+        end
+      else
+        yield
+      end
     end
   end
 end

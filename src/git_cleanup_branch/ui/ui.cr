@@ -45,9 +45,9 @@ module GitCleanupBranch::UI
         elsif element.is_a? SelectableElement
           "#{element == @focusing ? ">" : " "} #{element.draw @state}"
         end
-      }.join("\n")
+      }.join("\r\n")
       @content.each_line { print "\033[1A\033[1G\033[0K" }
-      puts next_content
+      puts next_content + "\033[1G"
       @content = next_content
     end
 

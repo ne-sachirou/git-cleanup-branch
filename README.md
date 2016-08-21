@@ -1,6 +1,6 @@
 git-cleanup-branch
 ==
-Small utility to cleanup Git merged branches at both local and remote.
+Small utility to cleanup Git merged branches interactively at both local and remote.
 
 Installation
 --

@@ -2,6 +2,10 @@ build:
 	crystal build --release bin/git-cleanup-branch.cr
 	chmod +x git-cleanup-branch
 
+init:
+	crystal deps
+	bundle
+
 test:
 	find src spec -name '*.cr' | xargs crystal tool format
 	crystal spec -v

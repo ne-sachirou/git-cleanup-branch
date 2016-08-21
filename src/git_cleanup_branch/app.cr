@@ -8,7 +8,7 @@ module GitCleanupBranch
         s[:remote] = [] of String
       end)
       ui.build do |ui|
-        ui.text "Cleanup Git merged branches at both local and remote.\r\n==\r\nLocal"
+        ui.text "Cleanup Git merged branches interactively at both local and remote.\r\n==\r\nLocal"
         local_branches
           .map(&.to_s)
           .each { |branch| ui.selectable branch, on_enter = on_enter_branch(:local, branch) }

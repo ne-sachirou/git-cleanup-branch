@@ -1,4 +1,6 @@
 language: crystal
+rvm:
+  - 2.2
 before_script:
   - make init
 script:

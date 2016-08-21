@@ -1,7 +1,9 @@
 language: crystal
-rvm:
-  - 2.2
+os:
+  - linux
+  - osx
 before_script:
+  - rvm 2.2.5
   - make init
 script:
   - make test

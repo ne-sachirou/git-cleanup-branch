@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/ne-sachirou/git-cleanup-branch.svg?branch=master)](https://travis-ci.org/ne-sachirou/git-cleanup-branch)
+
 git-cleanup-branch
 ==
 Small utility to cleanup Git merged branches interactively at both local and remote.

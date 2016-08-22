@@ -4,6 +4,7 @@ module GitCleanupBranch
       local_branches = Git::Branches.new.local_merged
       remote_branches = Git::Branches.new.remote_merged
       ui = UI::UI.new(State.new do |s|
+        s[:is_canceled] = false
         s[:local] = [] of String
         s[:remote] = [] of String
       end)
@@ -18,13 +19,14 @@ module GitCleanupBranch
           .each { |branch| ui.selectable branch, on_enter = on_enter_branch(:remote, branch) }
         ui.text "- - -"
         ui.selectable "Remove branches", on_enter = ->(element : UI::SelectableElement, state : State) { element.block.close; state }
-        ui.selectable "Cancel", on_enter = ->(element : UI::SelectableElement, state : State) { element.block.close; state }
+        ui.selectable "Cancel", on_enter = ->(element : UI::SelectableElement, state : State) { state[:is_canceled] = true; element.block.close; state }
       end
       ui.draw
       begin
         ui.start.receive
       rescue Channel::ClosedError
       end
+      exit if ui.state[:is_canceled]
       local_branches
         .select { |branch| ui.state[:local].as(Array(String)).includes? branch.to_s }
         .each &.remove

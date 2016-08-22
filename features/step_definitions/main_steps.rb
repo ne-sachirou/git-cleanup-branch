@@ -8,4 +8,5 @@ After do
   Dir["#{__dir__}/../../tmp/*"]
     .reject { |dir| dir =~ %r{\/aruba$} }
     .each { |dir| FileUtils.rm_rf dir, secure: true }
+  GitCleanupBranch.instance.quit
 end

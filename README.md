@@ -24,6 +24,8 @@ cd git_project
 git-cleanup-branch
 ```
 
+![demo](demo.gif)
+
 TODO
 --
 - [ ] Linux support.

@@ -16,7 +16,7 @@ Feature: UI
           Cancel
       """
 
-  Scenario: Down the cursor
+  Scenario: Down and up the cursor
     Given a sample git repository
     And start the command
     And type "j" to the UI
@@ -33,8 +33,22 @@ Feature: UI
           Remove branches
           Cancel
       """
+    And type "k" to the UI
+    Then it should pass with exactly:
+      """
+      Cleanup Git merged branches interactively at both local and remote.
+      ==
+      Local
+      >   sample_merged
+      Remote
+          origin/master
+          origin/sample_merged
+      - - -
+          Remove branches
+          Cancel
+      """
 
-  Scenario: Select an option
+  Scenario: Select and deselect an option
     Given a sample git repository
     And start the command
     And type " " to the UI
@@ -51,21 +65,35 @@ Feature: UI
           Remove branches
           Cancel
       """
-
-  Scenario: Select an option and up the cursor
-    Given a sample git repository
-    And start the command
-    And type "jj " to the UI
-    And type "k" to the UI
+    And type " " to the UI
     Then it should pass with exactly:
       """
       Cleanup Git merged branches interactively at both local and remote.
       ==
       Local
-          sample_merged
+      >   sample_merged
       Remote
-      >   origin/master
-        * origin/sample_merged
+          origin/master
+          origin/sample_merged
+      - - -
+          Remove branches
+          Cancel
+      """
+
+  Scenario: Select multiple options
+    Given a sample git repository
+    And start the command
+    And type " j j" to the UI
+    And type " " to the UI
+    Then it should pass with exactly:
+      """
+      Cleanup Git merged branches interactively at both local and remote.
+      ==
+      Local
+        * sample_merged
+      Remote
+        * origin/master
+      > * origin/sample_merged
       - - -
           Remove branches
           Cancel
@@ -155,4 +183,4 @@ Feature: UI
           Remove branches
       > * Cancel
       """
-    And the command has quited
+    And the command should have quited

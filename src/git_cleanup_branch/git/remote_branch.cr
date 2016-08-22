@@ -6,6 +6,7 @@ module GitCleanupBranch::Git
     def remove
       puts "git push #{@remote} :#{@branch}"
       Process.run "git", ["push", @remote, ":#{@branch}"]
+      Process.run "git", ["remote", "prune", @remote]
     end
 
     def to_s : String

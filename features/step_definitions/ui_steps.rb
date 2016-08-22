@@ -10,8 +10,8 @@ Given(/^type "([^"]*)" to the UI$/) do |chars|
   output_cucumber_aruba content
 end
 
-Then(/^the command has quited$/) do
+Then(/^the command should have quited$/) do
   status = PTY.check GitCleanupBranch.instance.pid
   expect(status.exited?).to be_truthy
-  expect(status.exitstatus).to eq 0
+  expect(status.success?).to be_truthy
 end

@@ -2,17 +2,18 @@
 
 git-cleanup-branch
 ==
-Small utility to cleanup Git merged branches interactively at both local and remote.
+Small utility to cleanup Git merged branches _interactively_ at both local and remote.
 
 Installation
 --
 Supported platforms:
 
 - OS X
+- Linux
 
 Download a binary from [releases](releases).
 
-Or build it yourself.
+Or build it by yourself. Latest [Crystal](https://crystal-lang.org/) is needed.
 
 ```sh
 git clone https://github.com/ne-sachirou/git-cleanup-branch.git
@@ -31,5 +32,4 @@ git-cleanup-branch
 
 TODO
 --
-- [ ] Linux support.
 - [ ] Windows support.

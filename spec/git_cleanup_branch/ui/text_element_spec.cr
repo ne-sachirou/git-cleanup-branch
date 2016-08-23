@@ -5,8 +5,7 @@ describe GitCleanupBranch::UI::TextElement do
     it "returns given content" do
       state = GitCleanupBranch::State.new
       element = GitCleanupBranch::UI::TextElement.new(GitCleanupBranch::UI::UI.new(state), "content")
-      actual = element.draw state
-      assert actual == "content"
+      element.draw(state).should eq "content"
     end
   end
 end

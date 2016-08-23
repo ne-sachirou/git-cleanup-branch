@@ -11,7 +11,7 @@ describe GitCleanupBranch::State do
   describe "#initialize" do
     it "creates an empty State without block" do
       state = GitCleanupBranch::State.new
-      assert state.is_a? GitCleanupBranch::State
+      state.should be_a GitCleanupBranch::State
     end
 
     it "creates a State with a block" do
@@ -19,9 +19,9 @@ describe GitCleanupBranch::State do
         s[:a] = 42
         s[:b] = "momonga"
       end
-      assert state.is_a? GitCleanupBranch::State
-      assert state[:a].as(typeof(42)) == 42
-      assert state[:b].as(typeof("momonga")) == "momonga"
+      state.should be_a GitCleanupBranch::State
+      state[:a].as(typeof(42)).should eq 42
+      state[:b].as(typeof("momonga")).should eq "momonga"
     end
   end
 
@@ -29,22 +29,22 @@ describe GitCleanupBranch::State do
     values.each do |v, t|
       it "returns a stored #{t} value" do
         state = GitCleanupBranch::State.new { |s| s[:k] = v }
-        assert state[:k].as(typeof(v)) == v
+        state[:k].as(typeof(v)).should eq v
       end
     end
 
     it "returns nil when the key dosen't store any value" do
-      state = GitCleanupBranch::State.new { }
-      assert state[:k].as(Nil) == nil
+      state = GitCleanupBranch::State.new
+      state[:k].as(Nil).should be_nil
     end
   end
 
   describe "#[]=" do
     values.each do |v, t|
       it "stores #{t} value" do
-        state = GitCleanupBranch::State.new { }
+        state = GitCleanupBranch::State.new
         state[:k] = v
-        assert state[:k].as(typeof(v)) == v
+        state[:k].as(typeof(v)).should eq v
       end
     end
   end

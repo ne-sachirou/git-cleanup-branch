@@ -9,8 +9,7 @@ describe GitCleanupBranch::UI::SelectableElement do
         "option",
         on_enter = ->(e : GitCleanupBranch::UI::SelectableElement, s : GitCleanupBranch::State) { s }
       )
-      actual = element.draw state
-      assert actual == "  option"
+      element.draw(state).should eq "  option"
     end
 
     it "returns given content with a mark when it's is_selected" do
@@ -21,8 +20,7 @@ describe GitCleanupBranch::UI::SelectableElement do
         on_enter = ->(e : GitCleanupBranch::UI::SelectableElement, s : GitCleanupBranch::State) { s }
       )
       element.on_enter state
-      actual = element.draw state
-      assert actual == "* option"
+      element.draw(state).should eq "* option"
     end
   end
 
@@ -34,11 +32,11 @@ describe GitCleanupBranch::UI::SelectableElement do
         "option",
         on_enter = ->(e : GitCleanupBranch::UI::SelectableElement, s : GitCleanupBranch::State) { s }
       )
-      assert !element.draw(state).starts_with?("*")
+      element.draw(state).should_not match /^\*/
       element.on_enter state
-      assert !!element.draw(state).starts_with?("*")
+      element.draw(state).should match /^\*/
       element.on_enter state
-      assert !element.draw(state).starts_with?("*")
+      element.draw(state).should_not match /^\*/
     end
 
     it "calls given on_enter with self & given state" do
@@ -56,13 +54,9 @@ describe GitCleanupBranch::UI::SelectableElement do
         end
       )
       element.on_enter state
-      assert on_enter_called?
-      actual = on_enter_arg_element.hash
-      expected = element.hash
-      assert actual == expected
-      actual = on_enter_arg_state.hash
-      expected = state.hash
-      assert actual == expected
+      on_enter_called?.should be_true
+      on_enter_arg_element.hash.should eq element.hash
+      on_enter_arg_state.hash.should eq state.hash
     end
   end
 end

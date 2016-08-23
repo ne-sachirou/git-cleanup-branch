@@ -10,11 +10,14 @@ Supported platforms:
 
 - OS X
 
+Download a binary from [releases](releases).
+
+Or build it yourself.
+
 ```sh
 git clone https://github.com/ne-sachirou/git-cleanup-branch.git
 cd git-cleanup-branch
 make
-cp git-cleanup-branch SOME_DIR_IN_YOUR_PATH/
 ```
 
 Usage

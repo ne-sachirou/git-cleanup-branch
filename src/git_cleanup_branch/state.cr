@@ -20,5 +20,9 @@ module GitCleanupBranch
     def []=(key : Symbol, val : StateValue)
       @state[key] = val
     end
+
+    def inspect
+      "State(#{@state.keys.map { |k| ":#{k}" }.join ", "})"
+    end
   end
 end

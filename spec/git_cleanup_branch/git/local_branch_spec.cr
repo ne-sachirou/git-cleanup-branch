@@ -4,7 +4,7 @@ describe GitCleanupBranch::Git::LocalBranch do
   describe "#to_s" do
     it "returns branch name" do
       branch = GitCleanupBranch::Git::LocalBranch.new "testing"
-      assert branch.to_s == "testing"
+      branch.to_s.should eq "testing"
     end
   end
 end

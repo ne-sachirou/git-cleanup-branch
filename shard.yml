@@ -10,7 +10,3 @@ development_dependencies:
   mocks:
     github: waterlink/mocks.cr
     version: ~> 0.9
-
-  power_assert:
-    github: rosylilly/power_assert.cr
-    version: ~> 0.2

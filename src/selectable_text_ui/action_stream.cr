@@ -1,4 +1,4 @@
-module GitCleanupBranch
+module SelectableTextUI
   class ActionStream
     include Enumerable(String)
 

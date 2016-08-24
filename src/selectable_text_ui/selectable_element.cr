@@ -1,4 +1,4 @@
-module GitCleanupBranch::UI
+module SelectableTextUI
   class SelectableElement(S) < Element
     getter :block, :content
     setter :content

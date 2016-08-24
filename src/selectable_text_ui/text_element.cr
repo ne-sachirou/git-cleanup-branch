@@ -1,4 +1,4 @@
-module GitCleanupBranch::UI
+module SelectableTextUI
   class TextElement(S) < Element
     def initialize(@block : UI(S), @content : String)
     end

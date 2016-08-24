@@ -1,4 +1,4 @@
-module GitCleanupBranch::UI
+module SelectableTextUI
   class Builder(S)
     def initialize(@ui : UI(S))
     end

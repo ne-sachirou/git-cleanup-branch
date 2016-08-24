@@ -1,4 +1,4 @@
-module GitCleanupBranch::UI
+module SelectableTextUI
   class UI(S)
     @focusing : SelectableElement(S)?
 

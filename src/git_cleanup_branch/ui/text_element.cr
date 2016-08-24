@@ -1,9 +1,9 @@
 module GitCleanupBranch::UI
-  class TextElement < Element
-    def initialize(@block : UI, @content : String)
+  class TextElement(S) < Element
+    def initialize(@block : UI(S), @content : String)
     end
 
-    def draw(state : State) : String
+    def draw : String
       @content
     end
   end

@@ -1,45 +1,55 @@
 module GitCleanupBranch
+  class AppState
+    getter :is_canceled, :local, :remote
+    setter :is_canceled, :local, :remote
+
+    def initialize
+      @is_canceled = false
+      @local = [] of Git::LocalBranch
+      @remote = [] of Git::RemoteBranch
+    end
+  end
+
   class App
     def start
       local_branches = Git::Branches.new.local_merged
       remote_branches = Git::Branches.new.remote_merged
-      ui = UI::UI.new(State.new do |s|
-        s[:is_canceled] = false
-        s[:local] = [] of String
-        s[:remote] = [] of String
-      end)
+      ui = UI::UI.new(AppState.new)
       ui.build do |ui|
         ui.text "Cleanup Git merged branches interactively at both local and remote.\r\n==\r\nLocal"
         local_branches
-          .map(&.to_s)
-          .each { |branch| ui.selectable branch, on_enter = on_enter_branch(:local, branch) }
+          .each { |branch| ui.selectable branch.to_s, on_enter = on_enter_branch(branch) }
         ui.text "Remote"
         remote_branches
-          .map(&.to_s)
-          .each { |branch| ui.selectable branch, on_enter = on_enter_branch(:remote, branch) }
+          .each { |branch| ui.selectable branch.to_s, on_enter = on_enter_branch(branch) }
         ui.text "- - -"
-        ui.selectable "Remove branches", on_enter = ->(element : UI::SelectableElement, state : State) { element.block.close; state }
-        ui.selectable "Cancel", on_enter = ->(element : UI::SelectableElement, state : State) { state[:is_canceled] = true; element.block.close; state }
+        ui.selectable "Remove branches", on_enter = ->(element : UI::SelectableElement(AppState), state : AppState) { element.block.close; state }
+        ui.selectable "Cancel", on_enter = ->(element : UI::SelectableElement(AppState), state : AppState) { state.is_canceled = true; element.block.close; state }
       end
       ui.draw
       begin
         ui.start.receive
       rescue Channel::ClosedError
       end
-      exit if ui.state[:is_canceled]
+      exit if ui.state.is_canceled
       local_branches
-        .select { |branch| ui.state[:local].as(Array(String)).includes? branch.to_s }
+        .select { |branch| ui.state.local.includes? branch }
         .each &.remove
       remote_branches
-        .select { |branch| ui.state[:remote].as(Array(String)).includes? branch.to_s }
+        .select { |branch| ui.state.remote.includes? branch }
         .each &.remove
     end
 
-    private def on_enter_branch(location, branch)
-      ->(element : UI::SelectableElement, state : State) do
-        branches = state[location].as(Array(String))
-        branches.includes?(branch) ? branches.delete(branch) : branches.push(branch)
-        state[location] = branches
+    private def on_enter_branch(branch : Git::Branch)
+      ->(element : UI::SelectableElement(AppState), state : AppState) do
+        case branch
+        when Git::LocalBranch
+          state.local.includes?(branch) ? state.local.delete(branch) : state.local.push(branch.as(Git::LocalBranch))
+        when Git::RemoteBranch
+          state.remote.includes?(branch) ? state.remote.delete(branch) : state.remote.push(branch.as(Git::RemoteBranch))
+        else
+          raise Exception.new "NotImplemented"
+        end
         state
       end
     end

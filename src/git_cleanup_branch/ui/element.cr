@@ -1,5 +1,5 @@
 module GitCleanupBranch::UI
   abstract class Element
-    abstract def draw(state : State) : String
+    abstract def draw : String
   end
 end

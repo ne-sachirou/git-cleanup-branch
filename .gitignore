@@ -1,4 +1,4 @@
-git-cleanup-branch
+bin/git-cleanup-branch
 /.shards/
 /tmp
 

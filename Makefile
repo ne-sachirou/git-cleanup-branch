@@ -1,6 +1,6 @@
 build:
-	crystal build --release bin/git-cleanup-branch.cr
-	chmod +x git-cleanup-branch
+	crystal build --release bin/git-cleanup-branch.cr -o bin/git-cleanup-branch
+	chmod +x bin/git-cleanup-branch
 
 init:
 	crystal deps

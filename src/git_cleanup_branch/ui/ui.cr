@@ -1,10 +1,10 @@
 module GitCleanupBranch::UI
-  class UI
-    @focusing : SelectableElement?
+  class UI(S)
+    @focusing : SelectableElement(S)?
 
     getter :state
 
-    def initialize(@state : State)
+    def initialize(@state : S)
       @children = [] of Element
       @content = ""
     end
@@ -29,25 +29,28 @@ module GitCleanupBranch::UI
       @ch.try &.close
     end
 
-    def build(&builder : Builder ->)
-      builder.call Builder.new self
+    def build(&builder : Builder(S) ->)
+      builder.call Builder(S).new self
     end
 
     def add_child(element : Element)
       @children.push element
-      @focusing = element if @focusing.nil? && element.is_a?(SelectableElement)
+      @focusing = element if @focusing.nil? && element.is_a?(SelectableElement(S))
     end
 
     def draw
       next_content = @children.map { |element|
-        if element.is_a? TextElement
-          element.draw @state
-        elsif element.is_a? SelectableElement
-          "#{element == @focusing ? ">" : " "} #{element.draw @state}"
+        case element
+        when TextElement(S)
+          element.draw
+        when SelectableElement(S)
+          "#{element == @focusing ? ">" : " "} #{element.draw}"
+        else
+          raise Exception.new "NotImplemented"
         end
       }.join("\r\n")
       @content.each_line { print "\033[1A\033[1G\033[0K" }
-      puts next_content + "\033[1G"
+      puts "#{next_content}\033[1G"
       @content = next_content
     end
 
@@ -56,16 +59,16 @@ module GitCleanupBranch::UI
       when "Cancel"
         close
       when "Enter"
-        @state = @focusing.try(&.on_enter @state) || @state
+        @state = @focusing.as(SelectableElement(S)).on_enter(@state) if @focusing
         draw
       when "Down"
         return unless @focusing
-        next_option = @children.skip_while { |element| element != @focusing }.skip(1).find(&.is_a? SelectableElement).as(SelectableElement?)
+        next_option = @children.skip_while { |element| element != @focusing }.skip(1).find(&.is_a? SelectableElement(S)).as(SelectableElement(S)?)
         @focusing = next_option if next_option
         draw
       when "Up"
         return unless @focusing
-        next_option = @children.take_while { |element| element != @focusing }.to_a.reverse.find(&.is_a? SelectableElement).as(SelectableElement?)
+        next_option = @children.take_while { |element| element != @focusing }.to_a.reverse.find(&.is_a? SelectableElement(S)).as(SelectableElement(S)?)
         @focusing = next_option if next_option
         draw
       end

@@ -11,9 +11,9 @@ Supported platforms:
 - OS X
 - Linux
 
-Download a binary from [releases](releases).
+Download a binary from [releases](https://github.com/ne-sachirou/git-cleanup-branch/releases).
 
-Or build it by yourself. Latest [Crystal](https://crystal-lang.org/) is needed.
+Or build it by yourself. Latest [Crystal](https://crystal-lang.org/) is required.
 
 ```sh
 git clone https://github.com/ne-sachirou/git-cleanup-branch.git

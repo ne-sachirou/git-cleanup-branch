@@ -16,28 +16,24 @@ module GitCleanupBranch
       remote_branches = Git::Branches.new.remote_merged
       ui = SelectableTextUI::UI.new(AppState.new)
       ui.build do |ui|
-        ui.text "Cleanup Git merged branches interactively at both local and remote.\r\n==\r\nLocal"
-        local_branches
-          .each { |branch| ui.selectable branch.to_s, on_enter = on_enter_branch(branch) }
+        ui.text "Cleanup Git merged branches interactively at both local and remote.\n==\nLocal"
+        local_branches.each { |branch| ui.selectable branch.to_s, on_enter = on_enter_branch(branch) }
         ui.text "Remote"
-        remote_branches
-          .each { |branch| ui.selectable branch.to_s, on_enter = on_enter_branch(branch) }
+        remote_branches.each { |branch| ui.selectable branch.to_s, on_enter = on_enter_branch(branch) }
         ui.text "- - -"
         ui.selectable "Remove branches", on_enter = ->(element : SelectableTextUI::SelectableElement(AppState), state : AppState) { element.block.close; state }
         ui.selectable "Cancel", on_enter = ->(element : SelectableTextUI::SelectableElement(AppState), state : AppState) { state.is_canceled = true; element.block.close; state }
+        ui.on_cancel { |ui, state| state.is_canceled = true; ui.close; state }
       end
-      ui.draw
       begin
         ui.start.receive
       rescue Channel::ClosedError
+      ensure
+        ui.close
       end
       exit if ui.state.is_canceled
-      local_branches
-        .select { |branch| ui.state.local.includes? branch }
-        .each &.remove
-      remote_branches
-        .select { |branch| ui.state.remote.includes? branch }
-        .each &.remove
+      ui.state.local.each &.remove
+      ui.state.remote.each &.remove
     end
 
     private def on_enter_branch(branch : Git::Branch)

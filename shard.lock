@@ -4,6 +4,10 @@ shards:
     github: waterlink/mocks.cr
     version: 0.9.2
 
+  ncurses:
+    github: jreinert/ncurses-crystal
+    commit: c110618fcc81d24e7085e8634fd68f6779e8af2a
+
   singleton:
     github: waterlink/singleton.cr
     version: 0.1.0

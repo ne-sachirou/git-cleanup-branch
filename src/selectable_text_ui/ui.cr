@@ -1,8 +1,10 @@
 module SelectableTextUI
   class UI(S)
     @focusing : SelectableElement(S)?
+    @on_cancel : ((UI(S), S) -> S)?
 
     getter :state
+    setter :on_cancel
 
     def initialize(@state : S)
       @children = [] of Element
@@ -11,14 +13,15 @@ module SelectableTextUI
 
     def start
       @ch = ch = Channel(Symbol).new
-      @actions = actions = ActionStream.new
+      @window = window = NCurses.init
+      raise "Can't initialize ncurses." unless window
+      @actions = actions = ActionStream.new window
+      window.refresh
+      draw
       spawn do
-        loop do
-          begin
-            actions.each { |action| react action }
-          rescue Channel::ClosedError
-            break
-          end
+        actions.each do |action|
+          react action
+          draw
         end
       end
       ch
@@ -27,6 +30,7 @@ module SelectableTextUI
     def close
       @actions.try &.close
       @ch.try &.close
+      NCurses.end_win
     end
 
     def build(&builder : Builder(S) ->)
@@ -38,40 +42,40 @@ module SelectableTextUI
       @focusing = element if @focusing.nil? && element.is_a?(SelectableElement(S))
     end
 
-    def draw
+    private def react(action)
+      case action
+      when :escape
+        on_cancel = @on_cancel
+        @state = on_cancel.call self, @state if on_cancel
+      when :return
+        @state = @focusing.as(SelectableElement(S)).on_enter(@state) if @focusing
+      when :down
+        return unless @focusing
+        next_option = @children.skip_while { |element| element != @focusing }.skip(1).find(&.is_a? SelectableElement(S)).as(SelectableElement(S)?)
+        @focusing = next_option if next_option
+      when :up
+        return unless @focusing
+        next_option = @children.take_while { |element| element != @focusing }.to_a.reverse.find(&.is_a? SelectableElement(S)).as(SelectableElement(S)?)
+        @focusing = next_option if next_option
+      end
+    end
+
+    private def draw
+      window = @window
+      raise "ncurses inn't initialized yet." unless window
       next_content = @children.map { |element|
         case element
         when TextElement(S)
           element.draw
         when SelectableElement(S)
-          "#{element == @focusing ? ">" : " "} #{element.draw}"
+          "#{element == @focusing ? ">" : " "}#{element.draw}"
         else
           raise Exception.new "NotImplemented"
         end
-      }.join("\r\n")
-      @content.each_line { print "\033[1A\033[1G\033[0K" }
-      puts "#{next_content}\033[1G"
+      }.join("\n")
+      window.clear
+      next_content.each_line { |line| window.print line }
       @content = next_content
-    end
-
-    private def react(action)
-      case action
-      when "Cancel"
-        close
-      when "Enter"
-        @state = @focusing.as(SelectableElement(S)).on_enter(@state) if @focusing
-        draw
-      when "Down"
-        return unless @focusing
-        next_option = @children.skip_while { |element| element != @focusing }.skip(1).find(&.is_a? SelectableElement(S)).as(SelectableElement(S)?)
-        @focusing = next_option if next_option
-        draw
-      when "Up"
-        return unless @focusing
-        next_option = @children.take_while { |element| element != @focusing }.to_a.reverse.find(&.is_a? SelectableElement(S)).as(SelectableElement(S)?)
-        @focusing = next_option if next_option
-        draw
-      end
     end
   end
 end

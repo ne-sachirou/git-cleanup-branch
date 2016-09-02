@@ -25,13 +25,13 @@ Feature: UI
       Cleanup Git merged branches interactively at both local and remote.
       ==
       Local
-          sample_merged
+         sample_merged
       Remote
-      >   origin/master
-          origin/sample_merged
+      >  origin/master
+         origin/sample_merged
       - - -
-          Remove branches
-          Cancel
+         Remove branches
+         Cancel
       """
     And type "k" to the UI
     Then it should pass with exactly:
@@ -39,13 +39,13 @@ Feature: UI
       Cleanup Git merged branches interactively at both local and remote.
       ==
       Local
-      >   sample_merged
+      >  sample_merged
       Remote
-          origin/master
-          origin/sample_merged
+         origin/master
+         origin/sample_merged
       - - -
-          Remove branches
-          Cancel
+         Remove branches
+         Cancel
       """
 
   Scenario: Select and deselect an option
@@ -57,13 +57,13 @@ Feature: UI
       Cleanup Git merged branches interactively at both local and remote.
       ==
       Local
-      > * sample_merged
+      >* sample_merged
       Remote
-          origin/master
-          origin/sample_merged
+         origin/master
+         origin/sample_merged
       - - -
-          Remove branches
-          Cancel
+         Remove branches
+         Cancel
       """
     And type " " to the UI
     Then it should pass with exactly:
@@ -71,13 +71,13 @@ Feature: UI
       Cleanup Git merged branches interactively at both local and remote.
       ==
       Local
-      >   sample_merged
+      >  sample_merged
       Remote
-          origin/master
-          origin/sample_merged
+         origin/master
+         origin/sample_merged
       - - -
-          Remove branches
-          Cancel
+         Remove branches
+         Cancel
       """
 
   Scenario: Select multiple options
@@ -90,13 +90,13 @@ Feature: UI
       Cleanup Git merged branches interactively at both local and remote.
       ==
       Local
-        * sample_merged
+       * sample_merged
       Remote
-        * origin/master
-      > * origin/sample_merged
+       * origin/master
+      >* origin/sample_merged
       - - -
-          Remove branches
-          Cancel
+         Remove branches
+         Cancel
       """
 
   Scenario: Up the cursor too much
@@ -109,13 +109,13 @@ Feature: UI
       Cleanup Git merged branches interactively at both local and remote.
       ==
       Local
-      >   sample_merged
+      >  sample_merged
       Remote
-          origin/master
-          origin/sample_merged
+         origin/master
+         origin/sample_merged
       - - -
-          Remove branches
-          Cancel
+         Remove branches
+         Cancel
       """
     Given type "k" to the UI
     Then it should pass with exactly:
@@ -123,13 +123,13 @@ Feature: UI
       Cleanup Git merged branches interactively at both local and remote.
       ==
       Local
-      >   sample_merged
+      >  sample_merged
       Remote
-          origin/master
-          origin/sample_merged
+         origin/master
+         origin/sample_merged
       - - -
-          Remove branches
-          Cancel
+         Remove branches
+         Cancel
       """
 
   Scenario: Down the cursor too much
@@ -142,13 +142,13 @@ Feature: UI
       Cleanup Git merged branches interactively at both local and remote.
       ==
       Local
-          sample_merged
+         sample_merged
       Remote
-          origin/master
-          origin/sample_merged
+         origin/master
+         origin/sample_merged
       - - -
-          Remove branches
-      >   Cancel
+         Remove branches
+      >  Cancel
       """
     Given type "j" to the UI
     Then it should pass with exactly:
@@ -156,13 +156,13 @@ Feature: UI
       Cleanup Git merged branches interactively at both local and remote.
       ==
       Local
-          sample_merged
+         sample_merged
       Remote
-          origin/master
-          origin/sample_merged
+         origin/master
+         origin/sample_merged
       - - -
-          Remove branches
-      >   Cancel
+         Remove branches
+      >  Cancel
       """
 
   Scenario: Cancel the command
@@ -175,12 +175,12 @@ Feature: UI
       Cleanup Git merged branches interactively at both local and remote.
       ==
       Local
-          sample_merged
+         sample_merged
       Remote
-          origin/master
-          origin/sample_merged
+         origin/master
+         origin/sample_merged
       - - -
-          Remove branches
-      > * Cancel
+         Remove branches
+      >* Cancel
       """
     And the command should have quited

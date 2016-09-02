@@ -1,4 +1,6 @@
 # frozen_string_literal: true
+require 'expect'
+require 'pty'
 require 'singleton'
 
 # Interface of `git-cleanup-branch` command.

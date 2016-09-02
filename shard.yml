@@ -9,8 +9,3 @@ license: GPL-3.0
 dependencies:
   ncurses:
     github: jreinert/ncurses-crystal
-
-development_dependencies:
-  mocks:
-    github: waterlink/mocks.cr
-    version: ~> 0.9

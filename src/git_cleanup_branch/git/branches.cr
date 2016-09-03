@@ -3,8 +3,8 @@ module GitCleanupBranch::Git
     def local_merged : Array(LocalBranch)
       `git branch --merged`
         .each_line
-        .map(&.strip)
         .reject(&.starts_with? "* ")
+        .map(&.strip)
         .map { |branch| LocalBranch.new branch }
         .to_a
     end
@@ -12,9 +12,9 @@ module GitCleanupBranch::Git
     def remote_merged : Array(RemoteBranch)
       `git branch -r --merged`
         .each_line
-        .map(&.strip)
         .reject(&.match /->/)
-        .map { |branch| m = branch.match %r{^([^/]+)/}; next unless m; {m[1], branch[m[0].size..-1]} }
+        .map(&.strip)
+        .map { |branch| branch.match(%r{^([^/]+)/}).try { |m| {m[1], branch[m[0].size..-1]} } }
         .to_a
         .compact
         .map { |remote, branch| RemoteBranch.new remote, branch }

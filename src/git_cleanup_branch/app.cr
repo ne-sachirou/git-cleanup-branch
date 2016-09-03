@@ -10,44 +10,62 @@ module GitCleanupBranch
     end
   end
 
-  class App
-    def start
-      local_branches = Git::Branches.new.local_merged
-      remote_branches = Git::Branches.new.remote_merged
-      ui = SelectableTextUI::UI.new(AppState.new)
-      ui.build do |ui|
+  class AppUI
+    include SelectableTextUI
+
+    def initialize(local_branches : Array(Git::LocalBranch), remote_branches : Array(Git::RemoteBranch))
+      @ui = UI(AppState).new AppState.new
+      @ui.build do |ui|
         ui.text "Cleanup Git merged branches interactively at both local and remote.\n==\nLocal"
         local_branches.each { |branch| ui.selectable branch.to_s, on_enter = on_enter_branch(branch) }
         ui.text "Remote"
         remote_branches.each { |branch| ui.selectable branch.to_s, on_enter = on_enter_branch(branch) }
         ui.text "- - -"
-        ui.selectable "Remove branches", on_enter = ->(element : SelectableTextUI::SelectableElement(AppState), state : AppState) { element.block.close; state }
-        ui.selectable "Cancel", on_enter = ->(element : SelectableTextUI::SelectableElement(AppState), state : AppState) { state.is_canceled = true; element.block.close; state }
-        ui.on_cancel { |ui, state| state.is_canceled = true; ui.close; state }
+        ui.selectable "Remove branches",
+          on_enter = ->(e : SelectableElement(AppState), s : AppState) { e.block.close; s }
+        ui.selectable "Cancel",
+          on_enter = ->(e : SelectableElement(AppState), s : AppState) { cancel e.block, s }
+        ui.on_cancel &->cancel(UI(AppState), AppState)
       end
+    end
+
+    def start : AppState
       begin
-        ui.start.receive
+        @ui.start.receive
       rescue Channel::ClosedError
       ensure
-        ui.close
+        @ui.close
       end
-      exit if ui.state.is_canceled
-      ui.state.local.each &.remove
-      ui.state.remote.each &.remove
+      @ui.state
     end
 
     private def on_enter_branch(branch : Git::Branch)
-      ->(element : SelectableTextUI::SelectableElement(AppState), state : AppState) do
+      ->(e : SelectableElement(AppState), s : AppState) do
         case branch
         when Git::LocalBranch
-          state.local.includes?(branch) ? state.local.delete(branch) : state.local.push(branch.as(Git::LocalBranch))
+          s.local.includes?(branch) ? s.local.delete(branch) : s.local.push(branch.as(Git::LocalBranch))
         when Git::RemoteBranch
-          state.remote.includes?(branch) ? state.remote.delete(branch) : state.remote.push(branch.as(Git::RemoteBranch))
-        else
-          raise Exception.new "NotImplemented"
+          s.remote.includes?(branch) ? s.remote.delete(branch) : s.remote.push(branch.as(Git::RemoteBranch))
         end
-        state
+        s
       end
+    end
+
+    private def cancel(ui : UI(AppState), state : AppState) : AppState
+      state.is_canceled = true
+      ui.close
+      state
+    end
+  end
+
+  class App
+    def start
+      state = AppUI.new(
+        Git::Branches.new.local_merged,
+        Git::Branches.new.remote_merged
+      ).start
+      exit if state.is_canceled
+      (state.local + state.remote).each &.remove
     end
   end
 end

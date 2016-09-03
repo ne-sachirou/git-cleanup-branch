@@ -10,7 +10,7 @@ init:
 test:
 	find src spec -name '*.cr' | xargs crystal tool format
 	crystal spec -v
-	if hash shellcheck 2> /dev/null ; then shellcheck bin/create-sample-git-repository.sh ; fi
+	if hash shellcheck 2> /dev/null ; then shellcheck -s sh bin/create-sample-git-repository.sh ; fi
 	bundle exec rubocop
 	bundle exec cucumber
 

@@ -23,7 +23,7 @@ class GitCleanupBranch
     raise AlreadyStartedException if @pid
     @pwd = Dir.pwd
     Dir.chdir "#{__dir__}/../../tmp/sample_local"
-    @input, @output, @pid = PTY.getpty "#{__dir__}/../../bin/git-cleanup-branch.cr"
+    @input, @output, @pid = PTY.getpty "#{__dir__}/git-cleanup-branch.cr"
     @output.sync = true
     buffer = []
     @input.expect(/Cleanup Git merged branches interactively at both local and remote.+?Cancel/m, 3) do |*lines|

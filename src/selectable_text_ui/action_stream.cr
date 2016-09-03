@@ -14,7 +14,8 @@ module SelectableTextUI
 
     def each
       loop do
-        case @ch.receive
+        char = @ch.receive
+        case char
         when :escape, 'q'
           yield :escape
         when :return, ' '

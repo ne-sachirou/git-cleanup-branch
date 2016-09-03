@@ -13,7 +13,7 @@ Supported platforms:
 
 Download a binary from [releases](https://github.com/ne-sachirou/git-cleanup-branch/releases).
 
-Or build it by yourself. Latest [Crystal](https://crystal-lang.org/) is required.
+Or build it by yourself. Latest [Crystal](https://crystal-lang.org/) & libncurses is required.
 
 ```sh
 git clone https://github.com/ne-sachirou/git-cleanup-branch.git

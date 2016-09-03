@@ -13,7 +13,7 @@ module SelectableTextUI
 
     def on_enter(state : S) : S
       @is_selected = !@is_selected
-      @on_enter.call(self, state)
+      @on_enter.call self, state
       state
     end
   end

@@ -27,6 +27,7 @@ GEM
     diff-lcs (1.2.5)
     ffi (1.9.14)
     gherkin (4.0.0)
+    greenletters (0.3.0)
     multi_json (1.12.1)
     multi_test (0.1.2)
     parser (2.3.1.2)
@@ -53,6 +54,7 @@ PLATFORMS
 DEPENDENCIES
   aruba
   cucumber
+  greenletters
   rubocop
 
 BUNDLED WITH

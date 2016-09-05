@@ -14,8 +14,7 @@ Feature: Remove branch
 
   Scenario: Remove a local merged branch
     Given a sample git repository
-    And process activity is logged to "greenletters.log"
-    And a process from command "bin/git-cleanup-branch.cr"
+    And a process
     When I execute the process
     And I wait 1 seconds for output from the process
     And I enter " jjj "
@@ -32,8 +31,7 @@ Feature: Remove branch
 
   Scenario: Remove a remote merged branch
     Given a sample git repository
-    And process activity is logged to "greenletters.log"
-    And a process from command "bin/git-cleanup-branch.cr"
+    And a process
     When I execute the process
     And I wait 1 seconds for output from the process
     And I enter "jj j "
@@ -49,8 +47,7 @@ Feature: Remove branch
 
   Scenario: Cancel to remove branches
     Given a sample git repository
-    And process activity is logged to "greenletters.log"
-    And a process from command "bin/git-cleanup-branch.cr"
+    And a process
     When I execute the process
     And I wait 1 seconds for output from the process
     And I enter " jj jj "

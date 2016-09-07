@@ -23,7 +23,8 @@ Feature: UI
     And a process
     When I execute the process
     And I wait 1 seconds for output from the process
-    And I enter "j"
+    And I discard earlier outputs from the process
+    And I keypress "j"
     Then I should see the following output:
       """
       Cleanup Git merged branches interactively at both local and remote.
@@ -37,7 +38,7 @@ Feature: UI
          Remove branches
          Cancel
       """
-    When I enter "k"
+    When I keypress "k"
     Then I should see the following output:
       """
       Cleanup Git merged branches interactively at both local and remote.
@@ -57,7 +58,8 @@ Feature: UI
     And a process
     When I execute the process
     And I wait 1 seconds for output from the process
-    And I enter " "
+    And I discard earlier outputs from the process
+    And I keypress " "
     Then I should see the following output:
       """
       Cleanup Git merged branches interactively at both local and remote.
@@ -71,7 +73,7 @@ Feature: UI
          Remove branches
          Cancel
       """
-    When I enter " "
+    When I keypress " "
     Then I should see the following output:
       """
       Cleanup Git merged branches interactively at both local and remote.
@@ -91,9 +93,9 @@ Feature: UI
     And a process
     When I execute the process
     And I wait 1 seconds for output from the process
-    And I enter " j j"
+    And I keypress " j j"
     And I discard earlier outputs from the process
-    And I enter " "
+    And I keypress " "
     Then I should see the following output:
       """
       Cleanup Git merged branches interactively at both local and remote.
@@ -113,9 +115,9 @@ Feature: UI
     And a process
     When I execute the process
     And I wait 1 seconds for output from the process
-    And I enter "j"
+    And I keypress "j"
     And I discard earlier outputs from the process
-    And I enter "k"
+    And I keypress "k"
     Then I should see the following output:
       """
       Cleanup Git merged branches interactively at both local and remote.
@@ -129,7 +131,7 @@ Feature: UI
          Remove branches
          Cancel
       """
-    When I enter "k"
+    When I keypress "k"
     Then I should see the following output:
       """
       Cleanup Git merged branches interactively at both local and remote.
@@ -149,9 +151,9 @@ Feature: UI
     And a process
     When I execute the process
     And I wait 1 seconds for output from the process
-    And I enter "jjj"
+    And I keypress "jjj"
     And I discard earlier outputs from the process
-    And I enter "j"
+    And I keypress "j"
     Then I should see the following output:
       """
       Cleanup Git merged branches interactively at both local and remote.
@@ -165,7 +167,7 @@ Feature: UI
          Remove branches
       >  Cancel
       """
-    When I enter "j"
+    When I keypress "j"
     Then I should see the following output:
       """
       Cleanup Git merged branches interactively at both local and remote.
@@ -180,25 +182,25 @@ Feature: UI
       >  Cancel
       """
 
-  Scenario: Cancel the command
-    Given a sample git repository
-    And a process
-    When I execute the process
-    And I wait 1 seconds for output from the process
-    And I enter "jjjj"
-    And I discard earlier outputs from the process
-    And I enter "j"
-    Then I should see the following output:
-      """
-      Cleanup Git merged branches interactively at both local and remote.
-      ==
-      Local
-         sample_merged
-      Remote
-         origin/master
-         origin/sample_merged
-      - - -
-         Remove branches
-      >* Cancel
-      """
-    And the process should exit succesfully
+  # Scenario: Cancel the command
+  #   Given a sample git repository
+  #   And a process
+  #   When I execute the process
+  #   And I wait 1 seconds for output from the process
+  #   And I keypress "jjjj"
+  #   And I discard earlier outputs from the process
+  #   And I keypress " "
+  #   Then I should see the following output:
+  #     """
+  #     Cleanup Git merged branches interactively at both local and remote.
+  #     ==
+  #     Local
+  #        sample_merged
+  #     Remote
+  #        origin/master
+  #        origin/sample_merged
+  #     - - -
+  #        Remove branches
+  #     >* Cancel
+  #     """
+  #   Then the process should exit succesfully

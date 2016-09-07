@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Given(/^a sample git repository$/) do
-  step %{I run `bin/create-sample-git-repository.sh 1>&2 /dev/null`}
+  step %(I run `bin/create-sample-git-repository.sh 1>&2 /dev/null`)
 end
 
 Then(/^the repository has following local branches:$/) do |expected|

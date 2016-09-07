@@ -14,8 +14,15 @@ Feature: Remove branch
 
   Scenario: Remove a local merged branch
     Given a sample git repository
-    And start the command
-    And type " jjj " to the UI
+    And a process
+    When I execute the process
+    And I wait 1 seconds for output from the process
+    And I keypress " jjj "
+    Then I should see the following output:
+      """
+      git branch -d sample_merged
+      """
+    When I wait 0.1 seconds
     Then the repository has following local branches:
       |                 |
       | master          |
@@ -28,8 +35,15 @@ Feature: Remove branch
 
   Scenario: Remove a remote merged branch
     Given a sample git repository
-    And start the command
-    And type "jj j " to the UI
+    And a process
+    When I execute the process
+    And I wait 1 seconds for output from the process
+    And I keypress "jj j "
+    Then I should see the following output:
+      """
+      git push origin :sample_merged
+      """
+    When I wait 0.1 seconds
     Then the repository has following local branches:
       |                 |
       | master          |
@@ -42,8 +56,11 @@ Feature: Remove branch
 
   Scenario: Cancel to remove branches
     Given a sample git repository
-    And start the command
-    And type " jj jj " to the UI
+    And a process
+    When I execute the process
+    And I wait 1 seconds for output from the process
+    And I keypress " jj jj "
+    # Then the process should exit succesfully
     Then the repository has following local branches:
       |                 |
       | master          |

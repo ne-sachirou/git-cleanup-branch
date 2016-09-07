@@ -1,4 +1,5 @@
 bin/git-cleanup-branch
+greenletters.log
 /.shards/
 /tmp
 

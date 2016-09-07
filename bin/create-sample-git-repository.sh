@@ -7,6 +7,8 @@ git init --bare
 mkdir ~/sample_local
 cd ~/sample_local
 git init
+git config --local user.email "momonga@example.com"
+git config --local user.name "Momonga"
 echo 'sample' > sample.txt
 git add sample.txt
 git commit --no-edit -m'initial'

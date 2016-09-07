@@ -10,5 +10,9 @@ module SelectableTextUI
     def selectable(content : String, on_enter : (SelectableElement(S), S) -> S)
       @ui.add_child SelectableElement(S).new(@ui, content, on_enter)
     end
+
+    def on_cancel(&callback : (UI(S), S) -> S)
+      @ui.on_cancel = callback
+    end
   end
 end

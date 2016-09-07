@@ -6,7 +6,6 @@ authors:
 
 license: GPL-3.0
 
-development_dependencies:
-  mocks:
-    github: waterlink/mocks.cr
-    version: ~> 0.9
+dependencies:
+  ncurses:
+    github: jreinert/ncurses-crystal

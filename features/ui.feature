@@ -1,186 +1,206 @@
 Feature: UI
   Scenario: Show merged branches
     Given a sample git repository
-    And start the command
-    Then it should pass with exactly:
+    And a process
+    When I execute the process
+    And I wait 1 seconds for output from the process
+    Then I should see the following output:
       """
       Cleanup Git merged branches interactively at both local and remote.
       ==
       Local
-      >   sample_merged
+      >  sample_merged
       Remote
-          origin/master
-          origin/sample_merged
+         origin/master
+         origin/sample_merged
       - - -
-          Remove branches
-          Cancel
+         Remove branches
+         Cancel
       """
 
   Scenario: Down and up the cursor
     Given a sample git repository
-    And start the command
-    And type "j" to the UI
-    Then it should pass with exactly:
+    And a process
+    When I execute the process
+    And I wait 1 seconds for output from the process
+    And I discard earlier outputs from the process
+    And I keypress "j"
+    Then I should see the following output:
       """
       Cleanup Git merged branches interactively at both local and remote.
       ==
       Local
-          sample_merged
+         sample_merged
       Remote
-      >   origin/master
-          origin/sample_merged
+      >  origin/master
+         origin/sample_merged
       - - -
-          Remove branches
-          Cancel
+         Remove branches
+         Cancel
       """
-    And type "k" to the UI
-    Then it should pass with exactly:
+    When I keypress "k"
+    Then I should see the following output:
       """
       Cleanup Git merged branches interactively at both local and remote.
       ==
       Local
-      >   sample_merged
+      >  sample_merged
       Remote
-          origin/master
-          origin/sample_merged
+         origin/master
+         origin/sample_merged
       - - -
-          Remove branches
-          Cancel
+         Remove branches
+         Cancel
       """
 
   Scenario: Select and deselect an option
     Given a sample git repository
-    And start the command
-    And type " " to the UI
-    Then it should pass with exactly:
+    And a process
+    When I execute the process
+    And I wait 1 seconds for output from the process
+    And I discard earlier outputs from the process
+    And I keypress " "
+    Then I should see the following output:
       """
       Cleanup Git merged branches interactively at both local and remote.
       ==
       Local
-      > * sample_merged
+      >* sample_merged
       Remote
-          origin/master
-          origin/sample_merged
+         origin/master
+         origin/sample_merged
       - - -
-          Remove branches
-          Cancel
+         Remove branches
+         Cancel
       """
-    And type " " to the UI
-    Then it should pass with exactly:
+    When I keypress " "
+    Then I should see the following output:
       """
       Cleanup Git merged branches interactively at both local and remote.
       ==
       Local
-      >   sample_merged
+      >  sample_merged
       Remote
-          origin/master
-          origin/sample_merged
+         origin/master
+         origin/sample_merged
       - - -
-          Remove branches
-          Cancel
+         Remove branches
+         Cancel
       """
 
   Scenario: Select multiple options
     Given a sample git repository
-    And start the command
-    And type " j j" to the UI
-    And type " " to the UI
-    Then it should pass with exactly:
+    And a process
+    When I execute the process
+    And I wait 1 seconds for output from the process
+    And I keypress " j j"
+    And I discard earlier outputs from the process
+    And I keypress " "
+    Then I should see the following output:
       """
       Cleanup Git merged branches interactively at both local and remote.
       ==
       Local
-        * sample_merged
+       * sample_merged
       Remote
-        * origin/master
-      > * origin/sample_merged
+       * origin/master
+      >* origin/sample_merged
       - - -
-          Remove branches
-          Cancel
+         Remove branches
+         Cancel
       """
 
   Scenario: Up the cursor too much
     Given a sample git repository
-    And start the command
-    And type "j" to the UI
-    And type "k" to the UI
-    Then it should pass with exactly:
+    And a process
+    When I execute the process
+    And I wait 1 seconds for output from the process
+    And I keypress "j"
+    And I discard earlier outputs from the process
+    And I keypress "k"
+    Then I should see the following output:
       """
       Cleanup Git merged branches interactively at both local and remote.
       ==
       Local
-      >   sample_merged
+      >  sample_merged
       Remote
-          origin/master
-          origin/sample_merged
+         origin/master
+         origin/sample_merged
       - - -
-          Remove branches
-          Cancel
+         Remove branches
+         Cancel
       """
-    Given type "k" to the UI
-    Then it should pass with exactly:
+    When I keypress "k"
+    Then I should see the following output:
       """
       Cleanup Git merged branches interactively at both local and remote.
       ==
       Local
-      >   sample_merged
+      >  sample_merged
       Remote
-          origin/master
-          origin/sample_merged
+         origin/master
+         origin/sample_merged
       - - -
-          Remove branches
-          Cancel
+         Remove branches
+         Cancel
       """
 
   Scenario: Down the cursor too much
     Given a sample git repository
-    And start the command
-    And type "jjj" to the UI
-    And type "j" to the UI
-    Then it should pass with exactly:
+    And a process
+    When I execute the process
+    And I wait 1 seconds for output from the process
+    And I keypress "jjj"
+    And I discard earlier outputs from the process
+    And I keypress "j"
+    Then I should see the following output:
       """
       Cleanup Git merged branches interactively at both local and remote.
       ==
       Local
-          sample_merged
+         sample_merged
       Remote
-          origin/master
-          origin/sample_merged
+         origin/master
+         origin/sample_merged
       - - -
-          Remove branches
-      >   Cancel
+         Remove branches
+      >  Cancel
       """
-    Given type "j" to the UI
-    Then it should pass with exactly:
+    When I keypress "j"
+    Then I should see the following output:
       """
       Cleanup Git merged branches interactively at both local and remote.
       ==
       Local
-          sample_merged
+         sample_merged
       Remote
-          origin/master
-          origin/sample_merged
+         origin/master
+         origin/sample_merged
       - - -
-          Remove branches
-      >   Cancel
+         Remove branches
+      >  Cancel
       """
 
-  Scenario: Cancel the command
-    Given a sample git repository
-    And start the command
-    And type "jjjj" to the UI
-    And type " " to the UI
-    Then it should pass with exactly:
-      """
-      Cleanup Git merged branches interactively at both local and remote.
-      ==
-      Local
-          sample_merged
-      Remote
-          origin/master
-          origin/sample_merged
-      - - -
-          Remove branches
-      > * Cancel
-      """
-    And the command should have quited
+  # Scenario: Cancel the command
+  #   Given a sample git repository
+  #   And a process
+  #   When I execute the process
+  #   And I wait 1 seconds for output from the process
+  #   And I keypress "jjjj"
+  #   And I discard earlier outputs from the process
+  #   And I keypress " "
+  #   Then I should see the following output:
+  #     """
+  #     Cleanup Git merged branches interactively at both local and remote.
+  #     ==
+  #     Local
+  #        sample_merged
+  #     Remote
+  #        origin/master
+  #        origin/sample_merged
+  #     - - -
+  #        Remove branches
+  #     >* Cancel
+  #     """
+  #   Then the process should exit succesfully

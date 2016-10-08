@@ -47,12 +47,12 @@ Pre-requirements:
 How to test.
 
 ```sh
-crystal deps
-bundle
+make init
 make
 make test
 ```
 
 TODO
 --
+- [ ] Too many unremoved branches.
 - [ ] Windows support.

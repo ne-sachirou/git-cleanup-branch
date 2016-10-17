@@ -18,15 +18,14 @@ module GitCleanupBranch::Git
     end
 
     def remote_merged : Array(RemoteBranch)
+      upstream = RemoteBranch.from_s `git rev-parse --abbrev-ref HEAD@{upstream}`.strip
       `git branch -r --merged`
         .each_line
         .reject(&.match /->/)
-        .map(&.strip)
-        .map { |branch| branch.match(%r{^([^/]+)/}).try { |m| {m[1], branch[m[0].size..-1]} } }
+        .map { |branch| RemoteBranch.from_s branch.strip }
+        .reject { |branch| branch == upstream }
         .to_a
         .compact
-        .map { |remote, branch| RemoteBranch.new remote, branch }
-        .to_a
     end
   end
 end

@@ -17,7 +17,7 @@ Feature: Remove branch
     And a process
     When I execute the process
     And I wait 1 seconds for output from the process
-    And I keypress " jjj "
+    And I keypress " jj "
     Then I should see the following output:
       """
       git branch -d sample_merged
@@ -38,7 +38,7 @@ Feature: Remove branch
     And a process
     When I execute the process
     And I wait 1 seconds for output from the process
-    And I keypress "jj j "
+    And I keypress "j j "
     Then I should see the following output:
       """
       git push origin :sample_merged
@@ -59,7 +59,7 @@ Feature: Remove branch
     And a process
     When I execute the process
     And I wait 1 seconds for output from the process
-    And I keypress " jj jj "
+    And I keypress " j jj "
     # Then the process should exit succesfully
     Then the repository has following local branches:
       |                 |

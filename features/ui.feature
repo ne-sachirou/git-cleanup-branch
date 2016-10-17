@@ -11,7 +11,6 @@ Feature: UI
       Local
       >  sample_merged
       Remote
-         origin/master
          origin/sample_merged
       - - -
          Remove branches
@@ -32,8 +31,7 @@ Feature: UI
       Local
          sample_merged
       Remote
-      >  origin/master
-         origin/sample_merged
+      >  origin/sample_merged
       - - -
          Remove branches
          Cancel
@@ -46,7 +44,6 @@ Feature: UI
       Local
       >  sample_merged
       Remote
-         origin/master
          origin/sample_merged
       - - -
          Remove branches
@@ -67,7 +64,6 @@ Feature: UI
       Local
       >* sample_merged
       Remote
-         origin/master
          origin/sample_merged
       - - -
          Remove branches
@@ -81,7 +77,6 @@ Feature: UI
       Local
       >  sample_merged
       Remote
-         origin/master
          origin/sample_merged
       - - -
          Remove branches
@@ -93,7 +88,7 @@ Feature: UI
     And a process
     When I execute the process
     And I wait 1 seconds for output from the process
-    And I keypress " j j"
+    And I keypress " j"
     And I discard earlier outputs from the process
     And I keypress " "
     Then I should see the following output:
@@ -103,7 +98,6 @@ Feature: UI
       Local
        * sample_merged
       Remote
-       * origin/master
       >* origin/sample_merged
       - - -
          Remove branches
@@ -125,7 +119,6 @@ Feature: UI
       Local
       >  sample_merged
       Remote
-         origin/master
          origin/sample_merged
       - - -
          Remove branches
@@ -139,7 +132,6 @@ Feature: UI
       Local
       >  sample_merged
       Remote
-         origin/master
          origin/sample_merged
       - - -
          Remove branches
@@ -151,7 +143,7 @@ Feature: UI
     And a process
     When I execute the process
     And I wait 1 seconds for output from the process
-    And I keypress "jjj"
+    And I keypress "jj"
     And I discard earlier outputs from the process
     And I keypress "j"
     Then I should see the following output:
@@ -161,7 +153,6 @@ Feature: UI
       Local
          sample_merged
       Remote
-         origin/master
          origin/sample_merged
       - - -
          Remove branches
@@ -175,7 +166,6 @@ Feature: UI
       Local
          sample_merged
       Remote
-         origin/master
          origin/sample_merged
       - - -
          Remove branches
@@ -187,7 +177,7 @@ Feature: UI
   #   And a process
   #   When I execute the process
   #   And I wait 1 seconds for output from the process
-  #   And I keypress "jjjj"
+  #   And I keypress "jjj"
   #   And I discard earlier outputs from the process
   #   And I keypress " "
   #   Then I should see the following output:
@@ -197,7 +187,6 @@ Feature: UI
   #     Local
   #        sample_merged
   #     Remote
-  #        origin/master
   #        origin/sample_merged
   #     - - -
   #        Remove branches

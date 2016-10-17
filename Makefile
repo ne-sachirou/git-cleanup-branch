@@ -3,7 +3,6 @@ default: build
 build:
 	crystal deps
 	crystal build --release bin/git-cleanup-branch.cr -o bin/git-cleanup-branch
-	chmod +x bin/git-cleanup-branch
 
 init:
 	crystal deps

@@ -1,12 +1,13 @@
 module GitCleanupBranch::Git
   class RemoteBranch < Branch
+    getter :remote
+
     def initialize(@remote : String, @branch : String)
     end
 
     def remove
       puts "git push #{@remote} :#{@branch}"
       Process.run "git", ["push", @remote, ":#{@branch}"]
-      Process.run "git", ["remote", "prune", @remote]
     end
 
     def to_s : String

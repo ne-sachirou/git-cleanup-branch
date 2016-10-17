@@ -60,12 +60,14 @@ module GitCleanupBranch
 
   class App
     def start
+      Git::Branches.refresh
       state = AppUI.new(
         Git::Branches.new.local_merged,
         Git::Branches.new.remote_merged
       ).start
       exit if state.is_canceled
       (state.local + state.remote).each &.remove
+      Git::Branches.refresh state.remote.map(&.remote)
     end
   end
 end

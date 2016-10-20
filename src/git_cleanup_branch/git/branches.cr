@@ -1,11 +1,11 @@
 module GitCleanupBranch::Git
   class Branches
-    def self.refresh(remotes = [] of String)
-      if remotes.empty?
-        `git fetch -p --all` rescue nil
-      else
-        remotes.each { |remote| Process.run "git", ["remote", "prune", remote] }
-      end
+    def self.refresh
+      `git fetch -p --all` rescue nil
+    end
+
+    def self.refresh(remotes : Array(String))
+      remotes.each { |remote| Process.run "git", ["remote", "prune", remote] }
     end
 
     def local_merged : Array(LocalBranch)

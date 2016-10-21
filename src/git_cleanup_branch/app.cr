@@ -16,15 +16,21 @@ module GitCleanupBranch
     def initialize(local_branches : Array(Git::LocalBranch), remote_branches : Array(Git::RemoteBranch))
       @ui = UI(AppState).new AppState.new
       @ui.build do |ui|
-        ui.text "Cleanup Git merged branches interactively at both local and remote.\n==\nLocal"
-        local_branches.each { |branch| ui.selectable branch.to_s, on_enter = on_enter_branch(branch) }
-        ui.text "Remote"
-        remote_branches.each { |branch| ui.selectable branch.to_s, on_enter = on_enter_branch(branch) }
-        ui.text "- - -"
-        ui.selectable "Remove branches",
-          on_enter = ->(e : SelectableElement(AppState), s : AppState) { e.block.close; s }
-        ui.selectable "Cancel",
-          on_enter = ->(e : SelectableElement(AppState), s : AppState) { cancel e.block, s }
+        ui.static_box do |ui|
+          ui.text "Cleanup Git merged branches interactively at both local and remote.\n=="
+        end
+        ui.scrollable_box do |ui|
+          ui.text "Local"
+          local_branches.each { |branch| ui.selectable branch.to_s, on_enter = on_enter_branch(branch) }
+          ui.text "Remote"
+          remote_branches.each { |branch| ui.selectable branch.to_s, on_enter = on_enter_branch(branch) }
+        end
+        ui.static_box do |ui|
+          ui.selectable "- - -\nRemove branches",
+            on_enter = ->(e : SelectableElement(AppState), s : AppState) { e.block.close; s }
+          ui.selectable "Cancel",
+            on_enter = ->(e : SelectableElement(AppState), s : AppState) { cancel e.block, s }
+        end
         ui.on_cancel &->cancel(UI(AppState), AppState)
       end
     end

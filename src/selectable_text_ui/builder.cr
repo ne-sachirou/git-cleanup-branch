@@ -3,6 +3,14 @@ module SelectableTextUI
     def initialize(@ui : UI(S))
     end
 
+    def static_box(&builder : Builder(S) ->)
+      builder.call self.class.new UI.new(@ui.state)
+    end
+
+    def scrollable_box(&builder : Builder(S) ->)
+      builder.call self.class.new UI.new(@ui.state)
+    end
+
     def text(content : String)
       @ui.add_child TextElement(S).new(@ui, content)
     end

@@ -8,7 +8,7 @@ greenletters.log
 
 ### Crystal ###
 /.deps/
-/libs/
+/lib/
 /.crystal/
 /doc/
 
@@ -17,3 +17,5 @@ greenletters.log
 # Dependencies will be locked in application that uses them
 # Uncomment the line below if you are creating a library.
 #/.deps.lock
+
+# End of https://www.gitignore.io/api/crystal

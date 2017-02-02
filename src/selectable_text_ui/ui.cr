@@ -13,10 +13,10 @@ module SelectableTextUI
 
     def start
       @ch = ch = Channel(Symbol).new
-      window = NCurses.init
+      @window = window = Termbox::Window.new
       raise "Can't initialize ncurses." unless window
       @actions = actions = ActionStream.new window
-      window.refresh
+      window.clear
       draw window
       spawn do
         actions.each do |action|
@@ -30,7 +30,8 @@ module SelectableTextUI
     def close
       @actions.try &.close
       @ch.try &.close
-      NCurses.end_win
+      @window.try &.shutdown
+      @window = nil
     end
 
     def build(&builder : Builder(S) ->)
@@ -69,7 +70,7 @@ module SelectableTextUI
     private def draw(window : Nil)
       raise "ncurses isn't initialized yet."
     end
-    private def draw(window : NCurses::Window)
+    private def draw(window : Termbox::Window)
       next_content = @children.map { |element|
         case element
         when TextElement(S)
@@ -79,7 +80,8 @@ module SelectableTextUI
         end
       }.join("\n")
       window.clear
-      next_content.each_line { |line| window.print line }
+      next_content.each_line.each_with_index { |line, i| window.write_string Termbox::Position.new(0, i), line }
+      window.render
       @content = next_content
     end
   end

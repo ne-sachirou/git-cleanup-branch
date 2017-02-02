@@ -2,7 +2,7 @@ language: crystal
 os:
   - linux
 script:
-  - crystal spec
+  - make travis
 notifications:
   slack:
     secure: TaQzB6y0GujFAnTh6K7V5GYd2GFkE0c/VR9TFxM8qzDYc8sdk+w2GT8ma0Li+cs0WiY7hgqW+4WfmkybXUGYlijleNQUE8tF6EBPV6kYD36Tdpo6+/ynbErjxYmLGKovoO3OhuNjIirTkA67f/MemjoObPe6dDJ6Ic+cooOJ7tbxWq9ccZyUxyqGkqGot1PvPRER3ppqw2f2PgoQXM5pSRgUg/TlWOKR6pwI3B+er4r/DT4wGPgBUcEYKpUH6tSExRn/DGviyOek9K/qA4YwBZkG5JEr3LwP1Z+eEcUdX8eeuR09QuvAiBlpkDy1PbB4DX+m7x2r+P78MotheXrByJVj9Ypc3UjyAYKHxQjpFoOrua/1hmEvK3SDKEAItrwbUXX4FtlmvoGAkxSD+L0xx3rGPV4j1EveZDGIyJ0tijZIQis0uh7gFmQREjXtYkeo2enspAo8Mm9zhy2vR4+toae6lzQX/33nbcItaYW/DNSxZ+uTdRnij/fwcB3Aryqmh5cwT2clTZiNnNI4+HBE/UB178TuGzFvBWn1jyDmf1dzuCNnJ4EQhJU8sq33Gagzd1C/JTrjcVUGoWLjPLDIz8+AJK2jhVGbi8mSMS3zuQtHKgEdLastIhmi0H5C0PcU5TGQHUKZCUJ5FqHnpnXntTwwpc1Amdp607CM7ZKy6m8=

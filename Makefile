@@ -22,6 +22,15 @@ test: ## Test
 	rm -f greenletters.log
 	bundle exec cucumber
 
+travis:
+	cd lib/termbox \
+	&& git clone --depth=1 https://github.com/nsf/termbox lib-termbox \
+	&& cd lib-termbox \
+	&& ./waf configure --prefix=$(HOME) \
+	&& ./waf \
+	&& ./waf install --destdir=/
+	LIBRARY_PATH=$(HOME)/lib:$(LIBRARY_PATH) LD_LIBRARY_PATH=$(HOME)/lib:$(LD_LIBRARY_PATH) crystal spec
+
 uninstall: ## rm the installed binary
 	rm -f /usr/local/bin/git-cleanup-branch
 

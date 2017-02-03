@@ -1,3 +1,5 @@
+require "option_parser"
+
 module GitCleanupBranch
   class AppState
     getter :is_canceled, :local, :remote
@@ -60,6 +62,19 @@ module GitCleanupBranch
 
   class App
     def start
+      OptionParser.parse! do |parser|
+        parser.banner = <<-HELP
+        git-cleanup-branch
+
+        \tCleanup Git merged branches interactively at both local and remote.
+
+        Options:
+        HELP
+        parser.on("-h", "--help", "Output this help.") do
+          puts parser
+          exit
+        end
+      end
       Git::Branches.refresh
       state = AppUI.new(
         Git::Branches.new.local_merged,

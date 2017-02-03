@@ -1,0 +1,12 @@
+(version 1)
+(deny default)
+(allow process-exec* (regex #"bin/git-cleanup-branch$"))
+(allow file-read-metadata
+       (path "/usr/lib/libSystem.B.dylib")
+       (path "/usr/lib/libiconv.2.dylib")
+       (subpath "/usr/lib/system")
+       (path "/usr/lib/libobjc.A.dylib")
+       (path "/usr/lib/libauto.dylib")
+       (path "/usr/lib/libc++abi.dylib")
+       (path "/usr/lib/libc++.1.dylib")
+       )

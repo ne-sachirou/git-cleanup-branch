@@ -8,15 +8,15 @@ Installation
 --
 Supported platforms:
 
-- OS X
-- Linux
+- MacOS X
+- Linux x86_64
 
 Download a binary from [releases](https://github.com/ne-sachirou/git-cleanup-branch/releases).
 
-Or build it by yourself. Latest [Crystal](https://crystal-lang.org/) & libncurses is required.
+Or build it by yourself. Latest [Crystal](https://crystal-lang.org/) is required.
 
 ```sh
-git clone https://github.com/ne-sachirou/git-cleanup-branch.git
+git clone --depth=1 https://github.com/ne-sachirou/git-cleanup-branch.git
 cd git-cleanup-branch
 make && make install
 ```
@@ -41,14 +41,11 @@ CONTRIBUTING
 Pre-requirements:
 
 - Latest ver. of Crystal.
-- libncurses has installed.
 - Latest ver. of Ruby & Bundler.
 
 How to test.
 
 ```sh
-make init
-make
 make test
 ```
 

@@ -1,4 +1,7 @@
-bin/git-cleanup-branch
+bc_flags
+bin/*
+!bin/*.cr
+!bin/*.sh
 greenletters.log
 /.shards/
 /tmp

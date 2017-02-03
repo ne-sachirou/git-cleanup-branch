@@ -21,7 +21,7 @@ When(/^I wait ([\d.]+) seconds$/) do |seconds|
   sleep seconds.to_f
 end
 
-# Monkey patch for NCurses.
+# Monkey patch for NCurses & Termbox.
 When(/^I keypress "([^\"]*)"(?: into process "([^\"]*)")?$/) do |input, name|
   name ||= 'default'
   @greenletters_process_table[name] << input

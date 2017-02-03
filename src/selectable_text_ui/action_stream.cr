@@ -2,27 +2,28 @@ module SelectableTextUI
   class ActionStream
     include Enumerable(String)
 
-    def initialize(window : NCurses::Window)
-      @ch = Channel(Symbol | Char).new
+    def initialize(window : Termbox::Window)
+      window.set_input_mode Termbox::INPUT_ESC | Termbox::INPUT_MOUSE
+      @ch = Channel(TermboxBindings::Event).new
       spawn do
         loop do
           break if @ch.closed?
-          window.on_input { |key, mod| @ch.send key }
+          @ch.send window.poll
         end
       end
     end
 
-    def each
+    def each(&block : Symbol ->)
       loop do
-        char = @ch.receive
-        case char
-        when :escape, 'q'
+        event = @ch.receive
+        next unless event.type == Termbox::EVENT_KEY
+        if [Termbox::KEY_CTRL_C, Termbox::KEY_ESC].includes?(event.key) || event.ch == 'q'.ord
           yield :escape
-        when :return, ' '
+        elsif [Termbox::KEY_ENTER, Termbox::KEY_SPACE].includes? event.key
           yield :return
-        when :up, 'k'
+        elsif event.key == Termbox::KEY_ARROW_UP || event.ch == 'k'.ord
           yield :up
-        when :down, 'j'
+        elsif event.key == Termbox::KEY_ARROW_DOWN || event.ch == 'j'.ord
           yield :down
         end
       end

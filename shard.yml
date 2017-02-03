@@ -7,5 +7,5 @@ authors:
 license: GPL-3.0
 
 dependencies:
-  ncurses:
-    github: jreinert/ncurses-crystal
+  termbox:
+    github: andrewsuzuki/termbox-crystal

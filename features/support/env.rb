@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'aruba/cucumber'
 require 'greenletters'
 require 'greenletters/cucumber_steps'

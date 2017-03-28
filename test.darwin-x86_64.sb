@@ -1,6 +1,6 @@
 (version 1)
 (deny default)
-(allow process-exec* (regex #"bin/git-cleanup-branch$"))
+(allow process-exec* (regex #"bin/git-cleanup-branch-darwin-x86_64$"))
 (allow file-read-metadata
        (path "/usr/lib/libSystem.B.dylib")
        (path "/usr/lib/libiconv.2.dylib")

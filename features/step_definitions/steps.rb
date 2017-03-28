@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'fileutils'
 
 Before do
@@ -12,8 +13,13 @@ end
 
 Given(/^a process$/) do
   step %(process activity is logged to "greenletters.log")
+  process = case `uname -s`.chomp
+            when 'Darwin' then 'git-cleanup-branch-darwin-x86_64'
+            when 'Linux' then 'git-cleanup-branch-linux-x86_64'
+            else raise 'Unknown platform'
+            end
   Dir.chdir "#{home_directory}/sample_local" do
-    step %(a process from command "#{home_directory}/../bin/git-cleanup-branch")
+    step %(a process from command "#{home_directory}/../bin/#{process}")
   end
 end
 
